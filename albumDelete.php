@@ -1,25 +1,22 @@
 <?php
 
 
-session_start();
-require('db_config.php');
 
+require('db_config.php');
+require('php/albums.php');
 
 if(isset($_POST) && !empty($_POST['id'])){
 
-        $sql = "DELETE FROM image_gallery WHERE AlbumId = ".$_POST['id'];
-        $mysqli->query($sql);
-		$sql = "DELETE FROM albums WHERE Id = ".$_POST['id'];
-		$mysqli->query($sql);
 
-        
 
+		$albums= new Albums();
+		$albums->deleteAlbum($_POST['id']);
 
 		$_SESSION['success'] = 'Album Deleted successfully.';
-		header("Location: http://localhost/");
+		header("Location: ".$SERVER."/");
 }else{
 	$_SESSION['error'] = 'Please Select Image or Write title';
-	header("Location: http://localhost/");
+	header("Location: ".$SERVER."/");
 }
 
 

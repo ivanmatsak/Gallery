@@ -9,40 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
    
     <script src="https://use.fontawesome.com/fe459689b4.js"></script>
-    <style type="text/css">
-    .gallery
-    {
-        display: inline-block;
-        margin-top: 20px;
-    }
-    body{
-    margin: 40px;
-    }
-
-    button{
-    cursor: pointer;
-    outline: 0;
-    color: #AAA;
-
-    }
-
-    .btn:focus {
-    outline: none;
-    }
-
-
-    .close-icon{
-        border-radius: 50%;
-        position: absolute;
-        right: 5px;
-        top: -10px;
-        padding: 5px 8px;
-    }
-        .form-image-upload{
-            background: #e8e8e8 none repeat scroll 0 0;
-            padding: 15px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
@@ -91,7 +59,7 @@
 
 
     </form> 
-
+    <br>
 
     <div class="row">
     <div class='list-group gallery'>
@@ -114,40 +82,40 @@
 
                 
             ?>
-                <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3' class="simple__card">
-                    <a class="thumbnail fancybox" rel="ligthbox" href="/uploads/<?php echo $image['image'] ?>">
+                <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3' >
+                    
+                    <a class="thumbnail fancybox item" rel="ligthbox" href="/uploads/<?php echo $image['image'] ?>">
                         <img class="img-responsive" alt="" src="/uploads/<?php echo $image['image'] ?>" />
                         <div class='text-center'>
                             <small class='text-muted'><?php echo $image['title'] ?></small>
                         </div>
                     </a>
+                    
                     <form action="/imageDelete.php" method="POST">
                     <input type="hidden" name="id" value="<?php echo $image['id'] ?>">
                     <input type="hidden" name="albumId" value="<?php echo $_GET["Id"] ?>">
                     <button type="submit" class="close-icon btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
                     </form>
 
-
+                    <?php
+                    $likes = $image['likes'];
+                    $dislikes = $image['dislikes'];
+                    ?>
+             
+                    <button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg like" aria-hidden="true" id="<?=$image['id']?>" data-id="<?=$image['id']?>"><?=$likes?></i></button>
+                    <button class="btn child" id="red"><i class="fa fa-thumbs-down fa-lg dislike" aria-hidden="true" id="dislike_<?=$image['id']?>" data-id="<?=$image['id']?>"><?=$dislikes?></i></button>
                     
-                    <button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
-                    <button class="btn child" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
-                    
-
-                    
-
                     <?php 
                     foreach($comments as $comment){
                         if($comment['galleryId']===$image['id']){
 
-
-                        
                         ?>
                         <figcaption> <?php echo $comment['comment'];?></figcaption>
                     <?}}?>
                     
                     <form action="/commentUpload.php" method="POST">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-lg-7">
                             <strong>Комментарий:</strong>
                             <input type="text" name="comment" class="form-control" placeholder="Комментарий">
                             <input type="hidden" name="commentId" id="hiddenField" value="<?php echo $image['id'] ?>" />
@@ -156,19 +124,14 @@
                         
                         <div class="col-md-2">
                             <br/>
-                            <button type="submit" class="btn btn-success">Отправить</button>
+                            <button type="submit" class="btn btn-success comment-btn">Отправить</button>
                         </div>
                     </div>
                     </form>
 
-                    
-
-
                 </div> 
 
-                
             <?php }} ?>
-
 
         </div> 
     </div> 
@@ -177,35 +140,6 @@
 
 </body>
 
-
-
-<script type="text/javascript">
-        $(document).ready(function(){
-            $(".fancybox").fancybox({
-                openEffect: "none",
-                closeEffect: "none"
-            });
-        });
-        var btn1 = document.querySelector('#green');
-    var btn2 = document.querySelector('#red');
-
-    btn1.addEventListener('click', function() {
-    
-        if (btn2.classList.contains('red')) {
-        btn2.classList.remove('red');
-        } 
-    this.classList.toggle('green');
-    
-    });
-
-    btn2.addEventListener('click', function() {
-    
-        if (btn1.classList.contains('green')) {
-        btn1.classList.remove('green');
-        } 
-    this.classList.toggle('red');
-    
-    });
-                    
-</script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="/js/scripts.js"></script>
 </html>

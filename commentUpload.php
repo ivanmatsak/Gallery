@@ -1,24 +1,25 @@
 <?php
 
 
-session_start();
-require('db_config.php');
 
+require('db_config.php');
+require('php/comment.php');
 
 if(isset($_POST) && !empty($_POST['comment']) && !empty($_POST['commentId'])){
 
 	$id = $_POST["albumId"];
 
-		$sql = "INSERT INTO image_comments (comment, galleryId) VALUES ('".$_POST['comment']."', '".$_POST['commentId']."')";
-		$mysqli->query($sql);
+		$comment= new Comment();
+		$comment->uploadComment($_POST['comment'], $_POST['commentId']);
+		
 
 
 		$_SESSION['success'] = 'Comment Uploaded successfully.';
-		header("Location: http://localhost/album.php?Id=$id");
+		header("Location: ".$SERVER."/album.php?Id=$id");
 	
 }else{
 	$_SESSION['error'] = 'Please Select Image or Write comment';
-	header("Location: http://localhost/album.php?Id=$id");
+	header("Location: ".$SERVER."/album.php?Id=$id");
 }
 
 

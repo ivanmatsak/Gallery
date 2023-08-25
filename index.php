@@ -64,15 +64,15 @@
 
 
 <?php
+require('db_config.php');
 
 
 
-$conn = new mysqli("localhost", "root", "1234", "albumdb");
-if($conn->connect_error){
-    die("Ошибка: " . $conn->connect_error);
+if($mysqli->connect_error){
+    die("Ошибка: " . $mysqli->connect_error);
 }
 $sql = "SELECT * FROM albums";
-if($result = $conn->query($sql)){
+if($result = $mysqli->query($sql)){
     $rowsCount = $result->num_rows; // количество полученных строк
     
     echo "<table class='table table-success table-striped'><tr><th>Id</th><th>Название</th><th>Описание</th><th>Подробнее</th><th>Удалить</th></tr>";
@@ -101,10 +101,6 @@ if($result = $conn->query($sql)){
     echo "Ошибка: " . $conn->error;
 }
 
-
-
-
-$conn->close();
 ?>
   </body>
 </html>
